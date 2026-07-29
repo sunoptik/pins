@@ -1,0 +1,357 @@
+.login{
+    display: flex;
+    flex-direction: column;
+    padding: 200px 20% 0px 20%;
+    gap: 10px;
+    
+}
+.inputlogin{
+    font-size: 1.5em;
+}
+.login button{
+    background-color: transparent;
+    color: black;
+    margin: 0px 5px 0px 0px;
+    border: none;
+    cursor: pointer;
+}
+.header{
+    background-color: antiquewhite;
+    width: 100%;
+    padding: 20px 0px 20px 0px;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 25px;
+    font-size: 18px;
+}
+.header button{
+    max-width: 100px;
+    position: relative;
+    white-space: nowrap;             
+    overflow: hidden;                  
+    text-overflow: ellipsis;          
+    display: block;  
+}
+.username{
+    background-color: transparent;
+    border: none;
+    margin-right: 45px;
+    font-size: 1.5em;
+}
+.usermenu{
+    font-size: 1.5em;
+    position: absolute;
+    background-color: #ff4d4f;
+    top: 50px;
+}
+.usermenu ul{
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    list-style-type:none;
+    flex-direction: column;
+    justify-content: start;
+    padding:0px 10px 0px 10px;
+}
+/*.addcircule{
+    border:2px solid black;
+    border-radius:50% ;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.partplus1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     border:2px solid black;
+     width: 15px;
+     height: 3px;
+     z-index: 1;
+     background-color: black;
+}   
+.partplus2{
+    background-color: black;
+     border:2px solid black;
+     width: 3px;
+     height: 15px;
+     z-index: 2;
+}*/
+.conteiner{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.postconteiner{
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(3,30%);
+    gap:10px;
+}
+.post{
+    display: flex;
+    justify-content: center;
+    border: 2px solid black;
+    border-radius: 15px;
+    flex-direction: column;
+    padding: 5px;
+    color: black;
+}
+.post h1{
+    font-size: 2em;
+    text-decoration: none;
+}
+.post h2{
+    font-size: 1.5em;
+    text-decoration: none;
+    opacity: 90%;
+}
+.postdate{
+    font-size: 1.5em;
+    opacity: 70%;
+    left: 10px;
+    text-align: right;
+    text-decoration: none;
+}
+.addpostconteiner{
+    display: flex;
+    justify-content:center;
+    flex-direction: column;
+    padding: 10px 20% 0px 20%;
+    gap: 20px;
+}
+.formconteiner{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap:20px ;
+}
+.imgconteiner{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.textconteiner{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.input{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom:2px solid gray;
+    transition:all 1s ease-in-out;
+}
+.input:focus{
+    outline: none;
+    border-bottom:2px solid gray;
+    cursor:text;
+}
+.inputfile{
+    display: none;
+}
+.inputfilelabel{
+    cursor: pointer;
+    color: black;
+}
+.textareainput{
+    resize: none;
+    width: 100%;
+    height: 400px;
+}
+.inputhead{
+    font-size: 2em;
+    opacity: 70%;
+}
+.buttonconteiner{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 40px; 
+}
+.instrumentbutton {
+  position: relative;
+  z-index: 2; 
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff; 
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid #000;
+  border-radius: 50%;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.plus-line1, .plus-line2 {
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  background-color: #000;
+  border-radius: 2px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.plus-line1 { transform: rotate(0deg); }
+.plus-line2 { transform: rotate(90deg); }
+
+/* --- Поворот плюса в красный крестик при open --- */
+.buttonconteiner.open .instrumentbutton {
+  border-color: #ff4d4f;
+}
+
+.buttonconteiner.open .plus-line1 {
+  transform: rotate(45deg);
+  background-color: #ff4d4f;
+}
+
+.buttonconteiner.open .plus-line2 {
+  transform: rotate(135deg);
+  background-color: #ff4d4f;
+}
+
+/* Вылетающие кнопки (ПОД главной кнопкой) */
+.addbutton {
+  position: absolute;
+  left: 2px; /* Позиционируем ровно за центром главной кнопки */
+  z-index: 1; /* Прячем ПОД главную кнопку */
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  background-color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  
+  /* Прячем в закрытом состоянии */
+  opacity: 0;
+  transform: translateX(0) scale(0.3);
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- ВЫЛЕТ КНОПОК ПРИ OPEN --- */
+.buttonconteiner.open .addbutton.btn1 {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(48px) scale(1);
+}
+
+.buttonconteiner.open .addbutton.btn2 {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(90px) scale(1);
+  transition-delay: 0.03s; /* Небольшая задержка для каскадного вылета */
+}
+
+.buttonconteiner.open .addbutton.btn3 {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(132px) scale(1);
+  transition-delay: 0.06s;
+}
+.buttonconteiner.open .addbutton.btn4 {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(174px) scale(1);
+  transition-delay: 0.09s;
+}
+.cross-btn {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid #ff4d4f;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.cross-btn:hover{
+    transform: scale(1.08);
+}
+.cross-line1,
+.cross-line2 {
+    position: absolute;
+    width: 14px;
+    height: 2px;
+    background-color: #ff4d4f;
+    border-radius: 2px;
+}
+.cross-line1 {
+    transform: rotate(45deg);
+}
+.cross-line2 {
+    transform: rotate(-45deg);
+}
+.img{
+    width: 100%;
+    resize: none;
+}
+.profile{
+    width: calc(60% - 40px);
+    max-width:calc(60% - 40px);
+    display:inline-flex;
+    margin: 10% 20% 0px 20%;
+    flex-direction: column;
+    padding: 20px 20px 20px 20px;
+    background-color: aquamarine;
+    border-radius: 5px;
+    border: 2px black solid;
+}
+.column{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.column1{
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.column2{
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.column2 img{
+    border: 1px black solid;
+    border-radius: 50%;
+    width: 90%;
+    height: 90%;
+}
+.seepostconteiner{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 16px;
+
+}
+.spandescription{
+    font-size: 10px;
+    color: black;
+}
+.seepostconteiner .imgconteiner{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.seepostconteiner .textconteiner{
+    font-size:12px;
+}
+

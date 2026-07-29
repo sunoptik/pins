@@ -1,0 +1,28 @@
+{
+  "name": "front",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@mui/lab": "^9.0.0-beta.6",
+    "@mui/material": "^9.2.0",
+    "docx": "^9.7.1",
+    "docx-preview": "^0.4.0",
+    "install": "^0.13.0",
+    "nodemon": "^3.1.14",
+    "npm": "^11.18.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-helmet-async": "^3.0.0",
+    "react-hot-toast": "^2.6.0",
+    "react-router-dom": "^7.18.1",
+    "vite": "^8.1.4"
+  }
+}
