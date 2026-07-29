@@ -135,10 +135,11 @@ export default function EditPosts(){
                 <label htmlFor={`inputimg${docx.id}`} className="inputfilelabel">{docx.file?"изменить выбор":"выбрать картинку"}</label>
                 {docx.file&&docx.url?(<button onClick={()=>{returnoriginimg(docx.id)}}>отменить изменене картинки</button>):""} 
                 <input className="inputfile" type="file" id={`inputimg${docx.id}`}  onChange={(e)=>{load(e,docx.id)}} accept="image/*" />
-                <div><img className="img" src={docx.file?docx.preview:docx.url} alt="" />
-                <input className="input" type="text" value={docx.description} placeholder="подпись к картинке" onChange={(e)=>{changeimgdescription(e,docx.id)}}/> </div>
-                <button className="cross-btn" onClick={()=>{deletepart(docx.id)}}><div className="cross-line1"></div><div className="cross-line2"></div></button> </div>)
-            }
+                {(docx.file||docx.url)&&
+                (<div className="imgconteiner">
+                <img className="img" src={docx.file?docx.preview:docx.url} alt="" />
+                <input className="input" type="text" value={docx.description} placeholder="подпись к картинке" onChange={(e)=>{changeimgdescription(e,docx.id)}}/> 
+                <button className="cross-btn" onClick={()=>{deletepart(docx.id)}}><div className="cross-line1"></div><div className="cross-line2"></div></button> </div>)}</div>)}
             )}
             <div className={`buttonconteiner ${open ? "open" : ""}`}>   
             <button className="instrumentbutton" type="button" onClick={() => setopen(!open)}>

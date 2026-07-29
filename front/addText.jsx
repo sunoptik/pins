@@ -122,7 +122,7 @@ export default function AddText(){
                 ):(<div className="imgconteiner" key={docx.id}>
                 <label htmlFor={`inputimg${docx.id}`} className="inputfilelabel">{docx.file?"изменить выбор":"выбрать картинку"}</label>
                 <input className="inputfile" type="file" id={`inputimg${docx.id}`}  onChange={(e)=>{load(e,docx.id)}} accept="image/*" />
-                {docx.file?(<div><img className="img" src={URL.createObjectURL(docx.file)} alt="" /> 
+                {docx.file?(<div className="imgconteiner"><img className="img" src={URL.createObjectURL(docx.file)} alt="" /> 
                 <input className="input" type="text" value={docx.description} placeholder="подпись к картинке" onChange={(e)=>{changeimgdescription(e,docx.id)}}/> 
                 <button className="cross-btn" onClick={()=>{deletepart(docx.id)}}><div className="cross-line1"></div><div className="cross-line2"></div></button> </div>):""}</div>)
             }
