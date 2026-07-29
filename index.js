@@ -159,7 +159,7 @@ if(check&&check.password===hex){
     const token = jwt.sign(payload, secret, options);
     res.cookie("session",token,{
         httpOnly:true,
-        secure:false,
+        secure:true,//продакшен
         maxAge:60*60*24*1000
     })
     return res.status(201).json({})
