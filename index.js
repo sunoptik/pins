@@ -56,7 +56,7 @@ async function connect() {
     await mongoose.connect(mongoURI);
 }
 connect()
-app.get("/home",async(req,res)=>{
+/*app.get("/home",async(req,res)=>{
 const token=req.cookies.session
 if(!token){
     return res.json({log:false})
@@ -71,7 +71,7 @@ return res.json({
 catch{
     return res.status(500).json({log:false})
 }
-})
+})*/
 app.get("/post/:id",async(req,res)=>{
     try{
     const id=req.params.id
@@ -159,13 +159,15 @@ if(check&&check.password===hex){
     const token = jwt.sign(payload, secret, options);
     res.cookie("session",token,{
         httpOnly:true,
-        secure:true,//продакшен
+        secure:false,
         maxAge:60*60*24*1000
     })
-    return res.status(201).json({})
+    return res.status(200).json({
+        login: login,
+    })
 }
 else{
-    return res.status(401).json({
+    return res.status(400).json({
         message:"Неверный логин или пароль"
     })
 }
@@ -177,7 +179,7 @@ const check = await users.find({login:login})
 if(check.length===0){
 const new_user=new users({login:login,password:hex,role:role,createdAt:new Date()})
 await new_user.save();
-return res.status(201).json({message:"sucsesfull"})
+return res.status(201).json({message:"регистрация прошла успешно"})
 }
 else{
     return res.status(400).json({ 
@@ -228,10 +230,10 @@ app.post("/addpost", upload.array("img"),async(req,res)=>{
         createdAt:new Date()
         })
         await post.save()
-        res.status(200).json({message:"good"})
+        res.status(200).json({message:"пост сохранён"})
     }
     catch{
-        res.status(500).json({message:"bad"})
+        res.status(500).json({message:"ошибка сохранения поста"})
     }
 })
 app.get("/post",async (req,res)=>{
@@ -239,17 +241,26 @@ app.get("/post",async (req,res)=>{
     res.json({document:data})
 })
 app.get("/userposts",async(req,res)=>{
+    try{
     const data=req.cookies.session
     try{
         const decode=jwt.verify(data,secret)
         const userid=await users.findOne({login:decode.login})
         const answer=await posts.find({author:userid._id})
-        res.json({
+        res.status(200).json({
             documents:answer
         })
     }
     catch{
-        console.log(1)
+        res.status(500).json({
+            message:"ошибка на сервере"
+        })
+    }
+    }
+    catch{
+        res.status(401).json({
+            message:"пользователь не авторизован"
+        })
     }
 })
 app.get("/userposts/:id",async(req,res)=>{
@@ -263,8 +274,8 @@ app.get("/userposts/:id",async(req,res)=>{
     })
     }
     catch{
-        res.status(404).json({
-            message:"error"
+        res.status(500).json({
+            message:"ошибка данных на сервере"
         })
     }
 })
@@ -342,10 +353,14 @@ app.post("/userposts/:id", upload.array("img"),async(req,res)=>{
     if (imagesToDelete.length > 0) {
     await Promise.all(imagesToDelete.map(id => cloudinary.uploader.destroy(id)));}
     await posts.updateOne({_id:params},{body:changebody,head:head,description:description})
-    res.status(201).send()
+    res.status(200).json({
+        message:"Обновление прошло успешно"
+    })
     }
     catch{
-        console.log("ебаная ошибка в изменении поста")
+        res.status(500).json({
+            message:"ошибка на сервере"
+        })
     }
 })
 const PORT = process.env.PORT || 3000;

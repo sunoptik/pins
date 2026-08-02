@@ -4,6 +4,7 @@ import Post from "./addPins"
 import "./style.css"
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
+import Masonry from "react-masonry-css";
 export default function Posts(){
     const [document,setDocument]=useState([])
     async function fetchs(){
@@ -14,18 +15,26 @@ export default function Posts(){
     useEffect(()=>{
         fetchs()
     },[])
+    const breakpoint={
+        default:3,
+        1100:3,
+        700:2,
+        500:1
+    }
     return(
         <div className="conteiner">
+            <Masonry
+            className="postconteiner"
+            breakpointCols={breakpoint}>
              <HelmetProvider>
             <Helmet>
                 <title>домашняя страница</title>
             </Helmet>
             </HelmetProvider>
-            <div className="postconteiner">
             {document.map((d)=>{
-                return  <NavLink to={`/post/${d._id}`}><Post key={d._id} document={d}/></NavLink>
+                return  <NavLink key={d._id} to={`/post/${d._id}`} className="notextdecoration"><Post document={d}/></NavLink>
             })}
-            </div>
+            </Masonry>
         </div>
     )
 }

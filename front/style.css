@@ -1,3 +1,11 @@
+html {
+  scrollbar-gutter: stable;
+}
+body {
+  overflow-x: hidden;
+  margin: 0;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
 .login{
     display: flex;
     flex-direction: column;
@@ -16,13 +24,12 @@
     cursor: pointer;
 }
 .header{
-    background-color: antiquewhite;
+    background-color: #979aaa;
     width: 100%;
     padding: 20px 0px 20px 0px;
     display: flex;
     flex-direction: row-reverse;
     margin-bottom: 25px;
-    font-size: 18px;
 }
 .header button{
     max-width: 100px;
@@ -36,13 +43,22 @@
     background-color: transparent;
     border: none;
     margin-right: 45px;
-    font-size: 1.5em;
+    font-size: 24px;
 }
 .usermenu{
     font-size: 1.5em;
     position: absolute;
-    background-color: #ff4d4f;
+    background-color: #bac0e2;
+    border: 1px solid #bac0e2;
+    border-radius: 5px;
     top: 50px;
+    z-index: 2;
+    opacity: 90%;
+    
+}
+.notextdecoration{
+    text-decoration: none;
+    color: black;
 }
 .usermenu ul{
     display: flex;
@@ -53,32 +69,6 @@
     justify-content: start;
     padding:0px 10px 0px 10px;
 }
-/*.addcircule{
-    border:2px solid black;
-    border-radius:50% ;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.partplus1{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-     border:2px solid black;
-     width: 15px;
-     height: 3px;
-     z-index: 1;
-     background-color: black;
-}   
-.partplus2{
-    background-color: black;
-     border:2px solid black;
-     width: 3px;
-     height: 15px;
-     z-index: 2;
-}*/
 .conteiner{
     width: 100%;
     display: flex;
@@ -86,24 +76,37 @@
 }
 .postconteiner{
     width: 80%;
-    display: grid;
-    grid-template-columns: repeat(3,30%);
+    display: flex;
+    justify-content: center;
     gap:10px;
 }
 .post{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     border: 2px solid black;
     border-radius: 15px;
     flex-direction: column;
-    padding: 5px;
     color: black;
+    overflow: hidden;
+    margin: 0px 0px 5px 5px;
+}
+.post img{
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    width: 100%;
 }
 .post h1{
+    padding-left:5px; 
     font-size: 2em;
     text-decoration: none;
+    text-wrap: wrap;
 }
 .post h2{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    padding-left:5px; 
     font-size: 1.5em;
     text-decoration: none;
     opacity: 90%;
@@ -111,9 +114,10 @@
 .postdate{
     font-size: 1.5em;
     opacity: 70%;
-    left: 10px;
+    padding-right: 5px;
     text-align: right;
     text-decoration: none;
+    padding-bottom: 5px;
 }
 .addpostconteiner{
     display: flex;
@@ -137,6 +141,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    font-size: 16px;
+    text-indent: 20px;
 }
 .input{
     border-top: none;
@@ -149,6 +155,13 @@
     outline: none;
     border-bottom:2px solid gray;
     cursor:text;
+}
+.red{
+    border-bottom:2px solid red;
+    transition:all 1s ease-in-out;
+}
+.red:focus{
+    border-bottom:2px solid rgb(225, 154, 154);
 }
 .inputfile{
     display: none;
@@ -171,6 +184,8 @@
   display: inline-flex;
   align-items: center;
   height: 40px; 
+  box-sizing: border-box;
+  overflow: visible;
 }
 .instrumentbutton {
   position: relative;
@@ -335,15 +350,21 @@
 }
 .seepostconteiner{
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    text-align: left;
     flex-direction: column;
     gap: 10px;
-    font-size: 16px;
-
+    width: 60%;
+}
+.spanhead{
+    font-size: 32px;
+    font-weight: 700;
 }
 .spandescription{
-    font-size: 10px;
+    font-size: 24px;
+    font-weight: 600;
+}
+.spanimgdescription{
+    font-size: 14px;
     color: black;
 }
 .seepostconteiner .imgconteiner{
@@ -351,7 +372,43 @@
     flex-direction: column;
     gap: 5px;
 }
-.seepostconteiner .textconteiner{
-    font-size:12px;
+.tagconteiner{
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    background-color: #2e998590;
+    gap: 10px;
 }
-
+.tagconteiner .tag{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    gap:5px;
+    border-radius: 5px;
+    border:1px solid black;
+    background-color: cadetblue;
+}
+.tagconteiner .tag img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.blurbg{
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    /*background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0) 100%);*/
+    backdrop-filter: blur(4px);
+    bottom: 0;
+    left: 0;
+    padding: 12px 12px 12px 12px;
+    text-align: right;
+}
+.blurbg h3{
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0;
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useNavigate, useParams } from "react-router-dom"
 import"./style.css"
+import { Toaster,toast } from "react-hot-toast";
 
 export default function EditPosts(){
     const params=useParams()
@@ -10,6 +11,8 @@ export default function EditPosts(){
     const [document,setdocument]=useState([])
     const [open,setopen]=useState(false)
     const navigate=useNavigate()
+    const [emptyHead,setEmptyHead]=useState(false)
+    const [emptyDescription,setEmptyDescription]=useState(false)
     async function fetchs(){
         const res=await fetch(`/userposts/${params.id}`)
         const data=await res.json()
@@ -74,11 +77,13 @@ export default function EditPosts(){
         const res=await fetch(`/userposts/${params.id}`,{
             method:"DELETE",
         })
+        const data=await res.json()
         if(res.ok){
-            navigate("/userposts")
+            toast.success(data.message)
+            setTimeout(()=>{navigate("/userposts")},3000)
         }
         else{
-            alert("ошибка на сервере не получилось удалить")
+            toast.error(data.message)
         }
     }
     function deletepart(id){
@@ -88,15 +93,42 @@ export default function EditPosts(){
         setdocument(document.map(d=>d.id===id?{...d,file:null}:d))
     }
     async function submit(){
+        if(!head||!description){
+        if(!head){
+            setEmptyHead(true)
+        }
+        if(!description){
+            setEmptyDescription(true)
+        }
+        return toast.error("Обязательные поля не заполнены")
+        }
         const formdata=new FormData()
+        let nontext=false
+        let nonimg=false
+        const errormessage=[]
         const newdocument=document.map((d)=>{
             if(d.type==="img"){
+                if(!d.file){
+                nonimg=true
+                }
                 return {id:d.id,type:"img",cloudid:d.cloudid,description:d.description,url:d.url,change:d.file?true:false}
             }
             else{
+                if(!d.value){
+                nontext=true
+                }
                 return d
             }
         })
+        if(nontext){
+        errormessage[0]="Не все абзацы заполнены"
+        }
+        if(nonimg){
+            errormessage[1]="Не все картинки выбраны"
+        }
+        if(errormessage[0]||errormessage[1]){
+            return toast.error(errormessage[0]+"\n"+errormessage[1])
+        }
         formdata.append("head",head)
         formdata.append("description",description)
         formdata.append("body",JSON.stringify(newdocument))
@@ -109,15 +141,21 @@ export default function EditPosts(){
             body:formdata,
             credentials:"include"
         })
+        const data=await res.json()
         if(res.ok){
-            alert("успешно")
+             toast.success(data.message)
+             setTimeout(() => {navigate("/useposts")},3000);
+        }
+        else{
+            toast.error(data.message)
         }
     }
     return(
         <div className="addpostconteiner">
+            <Toaster position="top-right" reverseOrder={false}></Toaster>
              <HelmetProvider>
             <Helmet>
-                <title>{head}</title>
+                <title>{`редактирование|${head}`}</title>
             </Helmet>
             </HelmetProvider>
             <form id="metadata" className="formconteiner">
@@ -147,9 +185,9 @@ export default function EditPosts(){
                 <div className="plus-line2"></div>
             </button>
             <button className="addbutton btn1" type="button" onClick={() => { newtext(); setopen(false); }}>T</button>
-            <button className="addbutton btn2" type="button" onClick={() => { newimg(); setopen(false); }}></button>
-            <button className="addbutton btn3" type="button" onClick={() => { submit(); setopen(false); }}>✓</button>
-            <button className="addbutton btn4" type="button" onClick={()=>{del()}}>d</button>
+            <button className="addbutton btn2" type="button" onClick={() => { newimg(); setopen(false); }}>I</button>
+            <button className="addbutton btn3" type="button" onClick={() => { submit(); setopen(false); }}>S</button>
+            <button className="addbutton btn4" type="button" onClick={()=>{del()}}>D</button>
             </div>
             <br /><br />
             

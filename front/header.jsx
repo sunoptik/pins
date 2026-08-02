@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { BrowserRouter, NavLink, } from "react-router-dom";
 import "./style.css"
 import { useEffect } from "react";
+
 export default function Header(){
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState("");
     const [search,setsearch]=useState("");
     const [login,setlogin]=useState(false);
     const [openmenu,setOpenmenu]=useState(false)
-    async function check(){
+    /*async function check(){
         const res=await fetch("/home",{
             method:"GET",
             credentials:"include"
@@ -19,14 +20,24 @@ export default function Header(){
             } else {
                 setUser(null);
             }
-    }
+    }*/
+   function addevent(){
+    window.addEventListener("message",(e)=>{
+            if(e.data.sucses){
+                localStorage.setItem("user",e.data.user)
+                localStorage.setItem("log",e.data.sucses)
+                setlogin(localStorage.getItem("log"))
+                setUser(localStorage.getItem("user"))
+                
+            }
+        })
+   }
     useEffect(()=>{
-        check();
-        window.sucseslogin=()=>{
-            check()
-        }
+        addevent()
+        setlogin(localStorage.getItem("log"))
+        setUser(localStorage.getItem("user"))
         return()=>{
-            window.sucseslogin=null;
+            window.removeEventListener("message",addevent)
         }
     },[])
     function open(e){
@@ -54,20 +65,23 @@ export default function Header(){
             </ul>
         </div>*/
         <div className="header">
-            {login?<button className="username" onClick={()=>{setOpenmenu(!openmenu)}}>{user.login}</button>:<NavLink to="/login"onClick={open}>войти</NavLink>}
+            {login?<button className="username" onClick={()=>{setOpenmenu(!openmenu)}}>{user}</button>:<NavLink className="username" to="/login"onClick={open}>войти</NavLink>}
             {openmenu?(<div className="usermenu">
             <ul>
             <li>
-                <NavLink to="/userposts">мои посты</NavLink>
+                <NavLink className="notextdecoration" to="/category">категории</NavLink>
             </li>
             <li>
-                <NavLink to="/addpost">добавить пост</NavLink>
+                <NavLink className="notextdecoration" to="/userposts">мои посты</NavLink>
             </li>
             <li>
-                <NavLink to={"/profile"}>профиль</NavLink>
+                <NavLink className="notextdecoration" to="/addpost">добавить пост</NavLink>
             </li>
             <li>
-                <NavLink onClick={(e)=>{e.preventDefault();setOpenmenu(!openmenu); setlogin(false)}}>exit</NavLink>
+                <NavLink className="notextdecoration" to={"/profile"}>профиль</NavLink>
+            </li>
+            <li>
+                <NavLink className="notextdecoration" onClick={(e)=>{e.preventDefault();setOpenmenu(!openmenu); setlogin(false)}}>exit</NavLink>
             </li> 
             </ul>
             </div>):null}

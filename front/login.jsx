@@ -26,9 +26,10 @@ export default  function Login(){
         });
         const data=await new_user.json()
         if(new_user.ok){
-            if(window.opener){
-                window.opener.sucseslogin()
-            }
+            window.opener.postMessage({
+                sucses:true,
+                user:data.login
+            },"*")
             window.close()
         }
         else{

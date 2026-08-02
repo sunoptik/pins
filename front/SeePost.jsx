@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import "./style.css"
+import { Helmet, HelmetProvider } from "react-helmet-async"
 
 export default function SeePost(){
     const params=useParams()
@@ -18,16 +19,21 @@ export default function SeePost(){
         fetchs()
     },[params.id])
     return(
+        <div className="conteiner">
+            <HelmetProvider>
+                <Helmet><title>{head}</title></Helmet>
+            </HelmetProvider>
         <div className="seepostconteiner">
-            <span>{head}</span>
-            <span>{description}</span>
+            <span className="spanhead">{head}</span>
+            <span className="spandescription">{description}</span>
             {body.map((b)=>{
                 return b.type==="text"?(
                 <div className="textconteiner"><p>{b.value}</p></div>):(
                 <div className="imgconteiner"> <img src={b.url} alt="img" />
-                <span className="spandescription">{b.description}</span></div>)
+                <span className="spanimgdescription">{b.description}</span></div>)
                 }
             )}
+        </div>
         </div>
     )
 }
