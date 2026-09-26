@@ -236,18 +236,29 @@ app.post("/addpost", upload.array("img"),async(req,res)=>{
         res.status(500).json({message:"ошибка сохранения поста"})
     }
 })
-app.get("/post",async (req,res)=>{
-    const data=await posts.find({})
-    res.json({document:data})
+app.post("/post",async (req,res)=>{
+    const {id}=req.body
+    if(id){
+        const data=await posts.find({_id:{$lt:id}}).sort({_id:-1}).limit(24)
+        return res.status(200).json({document:data})
+    }
+    const data=await posts.find({}).sort({_id:-1}).limit(24)
+    res.status(200).json({document:data})
 })
-app.get("/userposts",async(req,res)=>{
+app.post("/userposts",async(req,res)=>{
     try{
+    const {id}=req.body
     const data=req.cookies.session
     try{
         const decode=jwt.verify(data,secret)
         const userid=await users.findOne({login:decode.login})
-        const answer=await posts.find({author:userid._id})
-        res.status(200).json({
+        if(id){
+        const answer=await posts.find({author:userid._id,_id:{$lt:id}}).sort({_id:-1}).limit(24)
+        return res.status(200).json({
+            documents:answer
+        })}
+        const answer=await posts.find({author:userid._id}).sort({_id:-1}).limit(24)
+        return res.status(200).json({
             documents:answer
         })
     }

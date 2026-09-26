@@ -157,11 +157,11 @@ export default function AddText(){
                 <input id={`inputtext${docx.id}`} className="inputfile"type="file" onChange={(e)=>{changetextfile(e,docx.id)}} /> 
                 <button className="cross-btn" onClick={()=>{deletepart(docx.id)}}><div className="cross-line1"></div><div className="cross-line2"></div></button> </div>
                 ):(<div className="imgconteiner" key={docx.id}>
-                <label htmlFor={`inputimg${docx.id}`} className="inputfilelabel">{docx.file?"изменить выбор":"выбрать картинку"}</label>
-                <input className="inputfile" type="file" id={`inputimg${docx.id}`}  onChange={(e)=>{load(e,docx.id)}} accept="image/*" />
                 <button className="cross-btn" onClick={()=>{deletepart(docx.id)}}><div className="cross-line1"></div><div className="cross-line2"></div></button>
                 {docx.file?(<div className="imgconteiner"><img className="img" src={URL.createObjectURL(docx.file)} alt="" /> 
-                <input className="input" type="text" value={docx.description} placeholder="подпись к картинке" onChange={(e)=>{changeimgdescription(e,docx.id)}}/> </div>):""}</div>)
+                <input className="input" type="text" value={docx.description} placeholder="подпись к картинке" onChange={(e)=>{changeimgdescription(e,docx.id)}}/> </div>):""}
+                <label htmlFor={`inputimg${docx.id}`} className="inputfilelabel">{docx.file?"изменить выбор":"выбрать картинку"}</label>
+                <input className="inputfile" type="file" id={`inputimg${docx.id}`}  onChange={(e)=>{load(e,docx.id)}} accept="image/*" /></div>)
             }
             )}
             <div className={`buttonconteiner ${open ? "open" : ""}`}>   

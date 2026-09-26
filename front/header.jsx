@@ -65,13 +65,16 @@ export default function Header(){
             </ul>
         </div>*/
         <div className="header">
-            {login?<button className="username" onClick={()=>{setOpenmenu(!openmenu)}}>{user}</button>:<NavLink className="username" to="/login"onClick={open}>войти</NavLink>}
+            <button className="username notextdecoration" onClick={()=>{setOpenmenu(!openmenu)}}>меню</button>
             {openmenu?(<div className="usermenu">
             <ul>
             <li>
-                <NavLink className="notextdecoration" to="/category">категории</NavLink>
+                <NavLink className="notextdecoration" to="/">главная</NavLink>
             </li>
             <li>
+                <NavLink className="notextdecoration" to="/category">категории</NavLink>
+            </li>
+            {login?( <div><li>
                 <NavLink className="notextdecoration" to="/userposts">мои посты</NavLink>
             </li>
             <li>
@@ -81,8 +84,8 @@ export default function Header(){
                 <NavLink className="notextdecoration" to={"/profile"}>профиль</NavLink>
             </li>
             <li>
-                <NavLink className="notextdecoration" onClick={(e)=>{e.preventDefault();setOpenmenu(!openmenu); setlogin(false)}}>exit</NavLink>
-            </li> 
+                <NavLink className="notextdecoration" onClick={(e)=>{e.preventDefault();setOpenmenu(!openmenu); setlogin(false)}}>выход</NavLink>
+            </li></div> ):( <NavLink className="notextdecoration" to="/login">войти</NavLink>)}
             </ul>
             </div>):null}
         </div>
